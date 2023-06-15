@@ -1,5 +1,8 @@
+network:
+	docker network create bank-network
+
 postgres:
-	docker run --name psg -p 5432:5432 -e POSTGRES_USER=root -e POSTGRES_PASSWORD=secret -d postgres:latest
+	docker run --name psg --network bank-network -p 5432:5432 -e POSTGRES_USER=root -e POSTGRES_PASSWORD=secret -d postgres:latest
 
 createdb:
 	docker exec -it psg createdb --username=root --owner=root simple_bank
